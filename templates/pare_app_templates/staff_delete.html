@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} Delete Staff Information {% endblock %}
+
+{% block main %}
+	<div class="container">
+		<div class="del">
+			<p>Are you sure you want to Delete the staff Record with ID #{{detail.id}}</p>
+			<div class="inner-del">
+				<button><a href="{% url 'staffDetail' %}">Back</a></button>
+				<form method="post" action="{% url 'staffDelete' p_id=detail.id %}">
+					{% csrf_token %}
+					<button type="submit" class="delete">Delete</button>
+				</form>
+			</div>
+		</div>
+	</div>
+{% endblock %}
+	
+{% block js %}
+
+{% endblock %}

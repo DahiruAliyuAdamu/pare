@@ -1,0 +1,104 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} Homepage {% endblock %}
+
+{% block main %}
+	<!-- <h1>Pastrol Ressolve (PARE)</h1>
+	<button id="take-attendance">Take Attendance</button>
+	<div id="attendance"></div> -->
+
+	<div class="container homepage">
+		<div class="left">
+			<div class="site">
+				<h1>Welcome to Pastoral Ressolve Website</h1>
+				<img src="{% static 'images/1.jpg' %}" alt="Pare Homepage">
+			</div>
+			<div class="site-inner">
+				<div class="inner-left">
+					<div class="vission">
+						<h3>Our Vission</h3>
+						<p>The vission is to be a leading NGO devoted to nurture the Pastoralists peoples' aspirations for change, from their life of subsistence to that of a truely fulfilling, peaceful, pleasant one that manifest the beauty and gratness of Nature</p>	
+					</div>
+					<div class="mission">
+						<h3>Our Mission</h3>
+						<p>The Mission is to guide and assist Pastoralists in acquiring adequate understanding of their roles and opportunities available to them for a more fulfilling life and enable them to exploit these opportunities.</p>
+						<p>To promote the actualisation of a new found desire for the Pastoralists, to develop and grow positively for attainment of a happier existence by participating more in the nation's development.</p>
+						<p>This should be attained without undue interference with their day-to-day living pattern.</p>
+					</div>
+				</div>
+				<div class="inner-right">
+					<h3>About Us</h3>
+					<p>The Pastoral Resolve (PARE) is a nongovernmental, non profit making, non ethnic and non political organisation incorporated in April 1999 in Nigeria, working in all parts of the country, particularly in those areas with higher levels of pastoralists concentrations. It is a membership organisation with a nine member Board of Trustees headed by a President with 138 members and about 200 registered Local Pastoral Associations.</p>
+				</div>
+			</div>
+		</div>
+		<div class="right">
+			<div class="about-us">
+				<div>
+					<h3>Aim and Objectives</h3>
+					<p>PARE works to influence, encourage and assist in promoting the interest of and welfare of pastoralists and preserve their tradition and cultural value systems</p>
+				</div>
+				<div>
+					<p>To attain these objectives, PARE shall</p>
+					<li>Mobilize its members, components and partners to build alliances for action in conformity with its objectives</li>
+					<li>Strengthen the institutional capacity of its nomadic pastoralist association members to enhance cooperation between government, communities and other citizens in the areas they live</li>
+					<li>Encourage, study, conserve, preserve, record and support all educational, cultural, traditional and historical activities, projects of pastoralists and pastoral life</li>
+					<li>Provide a forum for discussion of nomadic pastoralists issues, including their scientific, educational, legal economic, social and political dimension, at local, national, regional and global levels</li>
+					<li>Develop expert networks and information systems to support its members, components and objectives</li>
+					<li>Make representations to foreign and international agencies so as to influence relevant policies, collaborate and/or affiliate with them in furtherance of its objective</li>
+					<li>Assist in the development of mechanisms for debating, handling and resolving conflicts of any cause and in any way for peaceful harmonious co-existence between the pastoralists and other groups</li>
+					<li>Negotiate and cooperate with government, public bodies, private institutions and individuals in the interest of conservation of natural resources</li>
+					<li>Take any other appropriate action, which will promote the interest of the pastoralists within the framework of the conservation of nature, natural resources and the environment</li>
+				</div>
+			</div>
+			<div class="activities">
+				<h3>Activities</h3>
+				<li></li>
+			</div>
+			<div class="social">
+				<li><a href="#"><img src="{% static 'images/1.jpg' %}">follow us on twitter</a></li>
+				<li><a href="#"><img src="{% static 'images/2.jpg' %}">follow us on Facebook</a></li>
+				<li><a href="#"><img src="{% static 'images/3.jpg' %}">follow us on Istagram</a></li>
+			</div>
+		</div>
+	</div>
+
+{% endblock %}
+
+{% block js %}
+	<script type="text/javascript">
+		$(document).ready(function(){
+			
+			$('#take-attendance').click(function(){
+					$.ajax({
+					'type': "GET",
+					'url': "{% url 'takeAttendance' %}",
+					success:function(data){
+						$('#attendance').html(data);
+					}
+				});
+			});
+			
+
+			$('#save').click(function(){
+				let late = confirm('Are you late today?');
+				let status = true;
+				// let reason = '';
+				$.ajax({
+					'type': "POST",
+					'url': "{% url 'takeAttendance' %}",
+					'data': {'status': status, 'late': late},
+					success:function(data){
+						if(data.taking == 'taking'){
+							alert('Attendance Already taking');
+						}else{
+							alert('Attendance recorded successully');
+						}
+					}
+				});
+			});
+			
+		});
+	</script>
+{% endblock %}

@@ -1,0 +1,129 @@
+<table style="text-align: center;">
+	<thead>
+		<tr>
+			<th>#</th>
+			<th>Name</th>
+			<th>Present / Absent <br><input for="status" class="status" title="select all" type="checkbox" name=""></th>
+			<th>Late <br><input for="late" class="late" title="select all" type="checkbox" name=""></th>
+			<th>Absent Reason</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% for staff in staffs %}					
+		<tr>
+
+			<td>{{ forloop.counter}}</td>
+			<td>{{ staff.get_fullname }}{{staff.status}}</td>
+			{% for at in att %}
+			<td>
+				{{at.staff.type}}
+				<!-- {{ staff.get_fullname }} {{at.staff}} -->
+				{% if at.staff.type == staff.get_fullname.type %}
+					{{ at.status }}
+				{% endif %}
+			</td>
+			{% endfor %}
+			<td>
+				<input {% if staff.attendance.status %} checked {% endif %} staff-id="{{ staff.id }}" type="checkbox" name="status" class="status">
+			</td>
+			<td>
+				<input {% if att.late %} checked {% else %} disabled {% endif %} staff-id="{{ staff.id }}" type="checkbox" name="late" class="late">{{staff.status}}
+			</td>
+			<td>
+				<select student-id="{{ staff.id }}" class="reason">
+					<option disabled selected>---</option>
+					{% for reason in reasons %}
+						<option {% if att.get_absent_reason == reason.id %} selected {% endif %} value="{{ reason.id }}">{{ reason }}</option>
+					{% empty %}
+						<option disabled>no reason available</option>
+					{% endfor %}
+				</select>
+			</td>
+		</tr>		
+		{% endfor %}
+	</tbody>
+</table>			
+
+{% block js %}
+<script type="text/javascript">
+	$(document).ready(function(){
+		$('.status').change(function(){
+			
+			$('.status').prop('checked', true)
+		})
+
+
+		toastr.options = {
+			"closeButton": true,
+			"debug": true,
+			"newestOnTop": true,
+			"progressBar": true,
+			"positionClass": "toast-top-right",
+			"preventDuplicates": false,
+			"showDuration": "300",
+			"hideDuration": "1000",
+			"timeout": "5000",
+			"extendedTimeOut": "1000",
+			"showEasing": "swing",
+			"hideEasing": "linear",
+			"showMethod": "fadeIn",
+			// "hideMethod": "fadeout"
+		}
+		let token = $('input[name="csrfmiddlewaretoken"]').val();
+
+		$('.status:checkbox').change(function(){
+			let checked = $(this).prop('checked');
+			let reason = $(this).parent().next().next().find('.reason');
+			let late = $(this).parent().next().find('.late');
+			reason.prop('hidden', checked);
+			late_checked = late.prop(checked);
+			if(checked){
+				reason.val('');
+				late.removeAttr('disabled');
+			}else{
+				reason.val('');
+				late.prop('checked', false);
+				late.attr('disabled', true);
+			}
+
+			let date = $('#selected_date').val();
+			
+			let staff = $(this).attr('staff-id');
+			if(staff){
+				$.ajax({
+					type: "post",
+					url: "{% url 'add_attendance' %}",
+					data: {
+						'staff': staff,
+						'status': checked,
+						'late': late_checked,
+						'reason': reason.val(),
+						'date': date,
+						'csrfmiddlewaretoken': token,
+					},
+
+					beforeSend: function() {
+						console.log("beforeSend");
+						// $('#loader').removeAttr('hidden');
+					},
+
+					complete: function(){
+						console.log("complete");
+						// $('#loader').attr('hidden', 'hidden');
+					},
+
+					success: function(data){
+						if(data=='success'){
+							console.log("success");
+							toastr.success('Successfully recorded!', 'Attendance')
+						}
+					}
+				});
+			}
+		});
+
+		
+
+	});
+</script>
+{% endblock %}

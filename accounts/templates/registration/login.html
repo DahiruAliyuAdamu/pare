@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% load static %}
+
+
+{% block title %} login {% endblock %}
+
+{% block style %}
+	<link rel="stylesheet" href="{% static 'account.css' %}" />
+{% endblock %} 
+
+{% block main %}
+	<div class="login">
+		<h3>Login</h3>
+		{% if form.errors %}
+			<p class="login-error">Your username and password did'nt match. please try again.</p>
+		{% endif %}
+
+		{% if next %}
+			{% if user.is_athenticated %}
+				<p class="not-athenticated">Your account doesn't have access to this page. To proceed,
+				please login with an account that has access.</p>
+			{% else %}
+				<p class="authentited">Please login to see this page</p>
+			{% endif %}
+		{% endif %}
+
+
+		<form method="post" action="{% url 'login' %}">
+			{% csrf_token %}
+
+			{{ form.username.label_tag }}
+			{{ form.username }}
+
+			{{ form.password.label_tag }}
+			{{ form.password }}
+
+			<input type="submit" value="login">
+			<input type="hidden" name="next" value="{{ next }}">
+		</form>
+
+		<p><a href="{% url 'password_reset' %}">Lost your password?</a></p>
+	</div>
+
+	{% for staff in staff_details %}
+		<p>{{ staff.username }}</p>
+	{% endfor %}
+{% endblock %}
+
+{% block js %}
+
+{% endblock %}

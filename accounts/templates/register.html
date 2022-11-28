@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} login {% endblock %}
+
+
+{% block main %}
+	<div class="container">
+		<div class="head">
+			<h1>Registration</h1>		
+		</div>
+		{% for message in messages %}
+			<div class="success">
+				<small class="message"> {{message}} </small>
+			</div>
+		{% endfor %}
+		<form method="POST" action="{% url 'register' %}">
+			{% csrf_token %}
+
+			<div class="form-group">
+				<div class="input">
+					{{ staff_form.first_name.label_tag }}
+					{{ staff_form.first_name }}
+				</div>
+				<div class="input">
+					{{ staff_form.surname.label_tag }}
+					{{ staff_form.surname }}
+
+				</div>
+			</div>
+
+			<div class="form-group">
+				<div class="input">
+					{{ staff_form.gender.label_tag }}
+					{{ staff_form.gender }}
+				</div>
+				<div class="input">
+					{{ staff_form.date_birth.label_tag }}
+					{{ staff_form.date_birth }}
+
+				</div>
+			</div>
+
+			<div class="form-group">
+				<div class="input">
+					{{ staff_form.community.label_tag }}
+					{{ staff_form.community }}
+				</div>
+				<div class="input">
+					{{ staff_form.clan.label_tag }}
+					{{ staff_form.clan }}
+
+				</div>
+			</div>
+
+			<div class="form-group">
+				<div class="input">
+					{{ staff_form.phone_number.label_tag }}
+					{{ staff_form.phone_number }}
+				</div>
+				<div class="input">
+					{{ staff_form.designation.label_tag }}
+					{{ staff_form.designation }}
+				</div>
+			</div>
+
+			<div class="form-group">
+				<div class="input">
+					{{ staff_form.username.label_tag }}
+					{{ staff_form.username }}
+				</div>
+				<div class="input">
+					{{ staff_form.password.label_tag }}
+					{{ staff_form.password }}
+				</div>
+			</div>
+
+			{% if staff_form.erros %}
+				{% for field in staff_form %}
+					{% for error in field.errors %}
+						<div class="error">
+							<strong>{{ error|escape }}</strong>
+						</div>
+					{% endfor %}
+				{% endfor %}
+				{% for error in form.non_field_errors %}
+					<div class="error">
+						<strong>{{ error|escape }}</strong>
+					</div>
+				{% endfor %}
+			{% endif %}
+			<input type="submit" value="Register">
+		</form>
+	</div>
+{% endblock %}
+
+{% block js %}
+
+{% endblock %}

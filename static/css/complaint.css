@@ -1,0 +1,21 @@
+
+.complaint label{
+	margin: 0 10px 0;
+}
+
+textarea{
+	resize: none;
+}
+
+#id_complaits{
+	resize: none;
+}
+
+.complaint #id_submit{
+	border: none;
+	padding: 10px;
+	margin: 0 15px 0 auto;
+	display: table;
+	background: green;
+	color: #fff;
+}

@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} Complaint {% endblock %}
+<!-- s -->
+{% block main %}
+	
+	<section class="complaint">
+		<h3>Complaint</h3>
+		{% for message in messages %}
+			<div class="success">
+				<small class="message"> {{message}} </small>
+			</div>
+		{% endfor %}
+		<form method="post" action="{% url 'complaint' %}">
+			{% csrf_token %}
+			
+			{{ form.fullname.label_tag }}
+			{{ form.fullname }}
+			<div class="form-group">
+				<div class="input">
+					{{ form.group_name.label_tag }}
+					{{ form.group_name }}
+				</div>
+				<div class="input">
+					{{ form.community.label_tag }}
+					{{ form.community }}
+
+				</div>
+			</div>
+
+			{{ form.subject.label_tag }}
+			{{ form.subject }}
+
+			{{ form.complaints.label_tag }}
+			{{ form.complaints }}
+
+			{% if form.erros %}
+				{% for field in form %}
+					{% for error in field.errors %}
+						<div class="error">
+							<strong>{{ error|escape }}</strong>
+						</div>
+					{% endfor %}
+				{% endfor %}
+				{% for error in form.non_field_errors %}
+					<div class="error">
+						<strong>{{ error|escape }}</strong>
+					</div>
+				{% endfor %}
+			{% endif %}
+			<button type="submit" name="" id="id_submit">send complaint</button>
+		</form>
+	</section>
+{% endblock %}
+
+{% block js %}
+
+{% endblock %}

@@ -1,0 +1,43 @@
+#single_complaint{
+	width: 40vw;
+	margin: 10px auto;
+	border: solid 1px green;
+	box-sizing: 5px;
+}
+
+#single_complaint header{
+	color: #fff;
+	font-size: 1.3em;
+}
+
+#single_complaint p{
+	background: #fff;
+	padding: 5px;
+	font-size: 1.1em;
+}
+
+
+
+
+
+#feedback{
+	width: 45vw;
+	margin: 20px auto;
+	padding: 15px;
+	background: #fff;
+}
+
+#feedback #single_feedback{
+	margin-bottom: 10px;
+	border-bottom: solid 1px #333;
+}
+
+#feedback h2, #feedback p{
+	margin-bottom: 10px;
+}
+
+#feedback aside .feedback{
+	width: 45vw;
+	margin: 20px auto;
+	padding: 15px;
+}

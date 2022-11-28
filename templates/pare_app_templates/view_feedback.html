@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} view feedback {% endblock %}
+
+{% block main %}
+	<div class="container">
+		<article id="feedback">
+			<section id="single_feedback">
+				<h2>{{complaint.fullname}}</h2>
+				<p>{{complaint.complaints}}</p>
+				<span>posted on {{complaint.complaint_date}}</span>
+			</section>
+			<aside class="feedback-body">
+				<h1>Feedback ({{feedback_count}})</h1>
+				{% for feedback in feedbacks %}
+					<section class="body">
+						<small>{{feedback.fullname.capitalize}}</small>
+						<p>{{feedback.reply}}</p>
+						<span>reply on {{feedback.reply_date}}</span>
+					</section>
+				{% endfor %}
+			</aside>
+			<section>
+				<form method="POST" action="{% url 'viewsingleFeedback' p_id=complaint.id %}">
+					{% csrf_token %}
+					{{feedback_form}}
+
+					{% if feedback_form.erros %}
+						{% for field in feedback_form %}
+							{% for error in field.errors %}
+								<div class="error">
+									<strong>{{ error|escape }}</strong>
+								</div>
+							{% endfor %}
+						{% endfor %}
+						{% for error in form.non_field_errors %}
+							<div class="error">
+								<strong>{{ error|escape }}</strong>
+							</div>
+						{% endfor %}
+					{% endif %}
+					<input type="submit" value="Reply">
+				</form>
+			</section>
+		</article>
+	</div>
+{% endblock %}
+
+{% block js %}
+
+{% endblock %}

@@ -1,0 +1,9 @@
+{% if taking == 'taking' %}
+	<p>Attenance already taking</p>
+{% else %}
+
+	<p>Dear {{ staff_data.first_name }} {{ staff_data.surname }} with username ({{ staff_data.username }}), Today is Monday.</p>
+
+	<p>Please take your attendance by clicking this button</p>
+	<button id="save">Take Attendance</button>
+{% endif %}

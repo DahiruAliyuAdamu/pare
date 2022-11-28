@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} Beneficiary Detail {% endblock %}
+
+{% block css %}
+
+{% endblock %}
+
+{% block main %}
+	<div class="container">
+		<div class="staff-head">
+			<div class="search">
+				<select id="group">
+					<option>Filter by Group Name</option>
+					{% for beneficiary in beneficiaries %}
+						<option>{{ beneficiary.group_name }}</option>
+					{% endfor %}
+				</select>
+			</div>
+			<a href="{% url 'beneficiary' %}">Register New Beneficiary</a>
+		</div>
+		<h1>Benficiary Detail</h1>
+
+		<div class="training-content">
+			<table border>
+				<tr>
+					<th>#</th>
+					<th>Group Name</th>
+					<th>Local Gov't</th>
+					<th>Community</th>
+					<th>Address</th>
+					<th>Group Leader</th>
+					<th>Phone Number</th>
+					<th>Action</th>
+				</tr>
+				<tbody class="beneficiary">
+					{% for beneficiary in beneficiaries %}
+						<tr>
+							<td>{{ forloop.counter }}</td>
+							<td>{{ beneficiary.group_name }}</td>
+							<td>{{ beneficiary.lga }}</td>
+							<td>{{ beneficiary.community }}</td>
+							<td>{{ beneficiary.address }}</td>
+							<td>{{ beneficiary.group_leader }}</td>
+							<td>{{ beneficiary.phone_number }}</td>
+							<td>
+								<a href="#">Edit</a>
+								<a href="#">Delete</a>
+							</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+	</div>
+{% endblock %}
+
+{% block js %}
+<script type="text/javascript">
+	$(document).ready(function () {
+		$('body').on('change', '#group', function(e){
+			let search = $(this).val()
+			$.ajax({
+				url: "{% url 'searchData' %}",
+				method: "GET",
+				data: {'search': search},
+				success:function(data){
+					console.log(data)
+					$('.beneficiary').html(data)
+				},
+				beforeSend:function(){
+					console.log('beforeSend')
+				},
+				complete:function(){
+					console.log('complete')
+				}
+			})
+		})
+	})
+</script>
+{% endblock %}

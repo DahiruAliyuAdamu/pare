@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}  Staff Detail {% endblock %}
+
+{% block css %}
+
+{% endblock %}
+
+{% block main %}
+	<div class="container">
+		<div class="staff-head">
+			<div>
+				<h1>Staff Detail</h1>
+			</div>
+			<a href="{% url 'register' %}">Register New Staff</a>
+		</div>
+		
+		<div class="staff-content">
+			<table border>
+				<tr>
+					<th>#</th>
+					<th>Name</th>
+					<th>Gender</th>
+					<th>Date of Birth</th>
+					<th>Phone Number</th>
+					<th>Community</th>
+					<th>Clan</th>
+					<th>Designation</th>
+					<th>Is Admin</th>
+					<th>Action</th>
+				</tr>
+				{% for staff in staff_details %}
+				<tr>
+					<td>{{ forloop.counter }}</td>
+					<td>{{ staff.first_name }} {{ staff.surname }}</td>
+					<td>{{ staff.gender }}</td>
+					<td>{{ staff.date_birth }}</td>
+					<td>{{ staff.phone_number }}</td>
+					<td>{{ staff.community }}</td>
+					<td>{{ staff.clan }}</td>
+					<td>{{ staff.designation }}</td>
+					{% if staff.is_superuser %}
+						<td>Admin</td>
+					{% else %}
+						<td>Staff</td>
+					{% endif %}
+					<td>
+						<a href="{% url 'staffEdit' p_id=staff.id %}">Edit</a>
+						<a href="{% url 'staffDelete' p_id=staff.id %}">Delete</a>
+					</td>
+				</tr>
+				{% endfor %}
+			</table>
+		</div>
+	</div>
+{% endblock %}
+
+{% block js %}
+
+{% endblock %}

@@ -1,0 +1,41 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} view complaints {% endblock %}
+{% block style %}
+	<link rel="stylesheet" href="{% static 'css/view_complaint.css' %}" />
+{% endblock %} 
+
+{% block main %}
+	<div class="container">
+		<div class="c-head">
+			<div><h1>View Complaints</h1></div>
+			<a href="{% url 'complaint' %}">Submit a new complaint</a>
+		</div>
+
+		{% for complaint, feedback_count in complaints %}
+			<section id="single_complaint">
+				<header>
+					<span>{{ complaint.fullname }} ---- {{ complaint.subject }}</span>
+				</header>
+				<p>{{ complaint.complaints|truncatewords:"30" }} <a href="viewsingleFeedback/{{complaint.id}}">see more</a></p>
+				<div class="footer">
+					<aside>
+						<h4>{{ complaint.group_name }}</h4>
+					</aside>
+					<aside>
+						<span>posted on {{ complaint.complaint_date }}</span>
+					</aside>
+					<aside class="right">
+						<span>Feedback</span>
+						<a href="#">{{ feedback_count }}</a>
+					</aside>
+				</div>	
+			</section>
+		{% endfor %}
+	</div>
+{% endblock %}
+
+{% block js %}
+
+{% endblock %}

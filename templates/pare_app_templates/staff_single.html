@@ -1,0 +1,81 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} Staff Information {% endblock %}
+
+{% block main %}
+
+	<div class="container">
+		<div class="head">
+			<h1>Staff Detail</h1>		
+		</div>
+		<div class="staff-edit">
+			<form method="post" action="{% url 'staffEdit' p_id=detail.id %}">
+				{% csrf_token %}
+				<input type="hidden" name="id" value="{{detail.id}}">
+
+				<div class="form-group">
+					<div class="input">
+						<label>First Name</label>
+						<input type="text" name="first_name" id="first_name" value="{{detail.first_name}}">
+					</div>
+					<div class="input">
+						<label>Surname</label>
+						<input type="text" name="first_name" id="first_name" value="{{detail.surname}}">
+					</div>
+				</div>
+
+				<div class="form-group">
+					<div class="input">
+						<label>Gender</label>
+						<select name="gender" id="gender">
+							<option>{{detail.gender}}</option>
+							{% if detail.gender == 'male' %}
+								<option>female</option>
+							{% else %}
+								<option>male</option>
+							{% endif %}
+						</select>
+					</div>
+					<div class="input">
+						<label>Date of Birth</label>
+						<input type="date" name="date_birth" id="date_birth" value="{{detail.date_birth}}">
+					</div>
+				</div>
+
+				<div class="form-group">
+					<div class="input">
+						<label>Community</label>
+						<input type="text" name="community" id="community" value="{{detail.community}}">
+					</div>
+					<div class="input">
+						<label>Clan</label>
+						<input type="text" name="clan" id="clan" value="{{detail.clan}}">
+					</div>
+				</div>
+
+				<div class="form-group">
+					<div class="input">
+						<label>Phone Number</label>
+						<input type="text" name="phone_number" id="phone_number" value="{{detail.phone_number}}">
+					</div>
+					<div class="input">
+						<label>Designation</label>
+						<input type="text" name="designation" id="designation" value="{{detail.designation}}">
+					</div>
+				</div>
+
+				<input type="submit" name="submit" value="Update">
+			</form>
+		</div>	
+	</div>
+
+{% endblock %}
+
+{% block js %}
+<script type="text/javascript">
+	$(document).ready(function(){
+
+	})	
+</script>
+{% endblock %}

@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} view attendance {% endblock %}
+
+
+{% block main %}
+	<div class="container">
+		<div class="staff-head">
+			<div><h1>View Attendance!</h1></div>
+			<a href="{% url 'attendance' %}">Take New Attendance</a>
+		</div>
+		<div class="attendance-body">
+			<table border>
+				<tr>
+					<th>#</th>
+					<th>Name</th>
+					<th>Status</th>
+					<th>Late</th>
+					<th>Reason</th>
+					<th>Date Taking</th>
+				</tr>
+				{% for attendance in attendances %}
+					<tr>
+						<td>{{ forloop.counter }}</td>
+						<td>{{ attendance.staff }}</td>
+						<td>{{ attendance.status }}</td>
+						<td>{{ attendance.late }}</td>
+						<td>{{ attendance.reason }}</td>
+						<td>{{ attendance.date }}</td>
+					</tr>
+				{% empty %}
+					<tr>
+						<td colspan="9">Attendance not yet taking</td>
+					</tr>
+				{% endfor %}
+			</table>
+		</div>
+	</div>
+{% endblock %}
+
+{% block js %}
+
+{% endblock %}

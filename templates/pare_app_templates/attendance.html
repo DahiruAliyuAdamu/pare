@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} view attendance {% endblock %}
+
+
+{% block main %}
+	<div class="container">
+		<div>
+			<div class="head">
+				<h1>Take Attendance</h1>
+			</div>
+			<div class="attendance-date">
+				<input type="date" name="" id="selected_date">
+			</div>
+			{% csrf_token %}
+			<table class="attendance">
+			
+			</table>
+		</div>
+	</div>
+{% endblock %}
+
+{% block js %}
+	<script type="text/javascript">
+		$('#selected_date').change(function (){
+			let search = $('#selected_date').val()
+			console.log(search)
+			$.ajax({
+				'type': "GET",
+				'data': {search:search},
+				'url': "{% url 'attendance_detail' %}",
+				success:function(res){
+					$('.attendance').html(res);
+				}
+			})
+		})
+	</script>
+{% endblock %}

@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} Training Detail {% endblock %}
+
+{% block css %}
+
+{% endblock %}
+
+{% block main %}
+	<div class="container">
+		<div class="staff-head">
+			<div><h1>Training Detail</h1></div>
+			<a href="{% url 'addTraining' %}">Register New Training</a>
+		</div>
+		<div class="training-content">
+			<table border>
+				<tr>
+					<th>#</th>
+					<th>Training Name</th>
+					<th>Facilitator Name</th>
+					<th>Organization</th>
+					<th>Starting Date</th>
+					<th>Ending Date</th>
+					<th>No. of Days</th>
+					<th>Action</th>
+				</tr>
+				{% for training in trainings %}
+				<tr>
+					<td>{{ forloop.counter }}</td>
+					<td>{{ training.training_name }}</td>
+					<td>{{ training.facilitaor_name }}</td>
+					<td>{{ training.organization }}</td>
+					<td>{{ training.starting_date }}</td>
+					<td>{{ training.ending_date }}</td>
+					<td>{{ training.no_of_days }}</td>
+					<td>
+						<a href="#">Edit</a>
+						<a href="#">Delete</a>
+					</td>
+				</tr>
+				{% endfor %}
+			</table>
+		</div>
+	</div>
+{% endblock %}
+
+{% block js %}
+
+{% endblock %}

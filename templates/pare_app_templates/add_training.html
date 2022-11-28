@@ -1,0 +1,76 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} Add training {% endblock %}
+
+{% block css %} {% endblock %}
+
+{% block main %}
+
+	<div class="container">
+		<div class="head">
+			<h1>Add Training</h1>		
+		</div>
+		<form method="post" action="{% url 'addTraining' %}">
+			{% csrf_token %}
+
+			<div class="form-group">
+				<div class="input">
+					{{ training_form.training_name.label_tag }}
+					{{ training_form.training_name }}
+				</div>
+				<div class="input">
+					{{ training_form.facilitaor_name.label_tag }}
+					{{ training_form.facilitaor_name }}
+
+				</div>
+			</div>
+
+			<div class="form-group">
+				<div class="input">
+					{{ training_form.organization.label_tag }}
+					{{ training_form.organization }}
+				</div>
+				<div class="input">
+					{{ training_form.days.label_tag }}
+					{{ training_form.days }}
+
+				</div>
+			</div>
+
+			<div class="form-group">
+				<div class="input">
+					{{ training_form.starting_date.label_tag }}
+					{{ training_form.starting_date }}
+				</div>
+				<div class="input">
+					{{ training_form.ending_date.label_tag }}
+					{{ training_form.ending_date }}
+
+				</div>
+			</div>
+
+			{% if training_form.erros %}
+				{% for field in training_form %}
+					{% for error in field.errors %}
+						<div class="error">
+							<strong>{{ error|escape }}</strong>
+						</div>
+					{% endfor %}
+				{% endfor %}
+				{% for error in form.non_field_errors %}
+					<div class="error">
+						<strong>{{ error|escape }}</strong>
+					</div>
+				{% endfor %}
+			{% endif %}
+			<input type="submit" value="Register">
+		</form>
+	</div>
+{% endblock %}
+
+{% block js %}
+<script type="text/javascript">
+	
+</script>
+{% endblock %}

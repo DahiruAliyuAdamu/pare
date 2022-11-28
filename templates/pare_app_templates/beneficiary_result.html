@@ -1,0 +1,19 @@
+{% for beneficiary in beneficiaries %}
+	<tr>
+		<td>{{ forloop.counter }}</td>
+		<td>{{ beneficiary.group_name }}</td>
+		<td>{{ beneficiary.lga }}</td>
+		<td>{{ beneficiary.community }}</td>
+		<td>{{ beneficiary.address }}</td>
+		<td>{{ beneficiary.group_leader }}</td>
+		<td>{{ beneficiary.phone_number }}</td>
+		<td>
+			<a href="#">Edit</a>
+			<a href="#">Delete</a>
+		</td>
+	</tr>
+{% empty %}
+	<tr>
+		<td colspan="7">No Record Found</td>
+	</tr>
+{% endfor %}

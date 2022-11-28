@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} Query Error {% endblock %} 
+{% block main %}
+	
+	<div class="container">
+		<div class="delete-error">
+			<h2>No Record Match the Query</h2>
+			<button><a href="{% url 'staffDetail' %}">&lt;&lt; Back</a></button>
+		</div>
+	</div>
+
+{% endblock %}
